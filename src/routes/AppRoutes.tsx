@@ -2,7 +2,7 @@
 import {Routes, Route, BrowserRouter } from "react-router-dom"
 import { PublicLayout } from "../layouts/PublicLayout"
 import LoginPage from "../pages/Login/Index"
-import DashboardPage from "../pages/Dashboard/index"
+import Onboarding from "../pages/Onboarding/index"
 
 export const AppRoutes=()=>{
     return(
@@ -10,9 +10,9 @@ export const AppRoutes=()=>{
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<PublicLayout/>}>
-                    <Route index element={<DashboardPage/>}/>
+                    <Route index element={<Onboarding/>}/>
                     <Route path="/login" element={<LoginPage/>}/>
-                     <Route path="/dashboard" element={<DashboardPage/>}/>
+                     <Route path="/onboarding" element={<Onboarding/>}/>
                 </Route>
                 
             </Routes>
