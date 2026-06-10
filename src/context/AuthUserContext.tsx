@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import type { User } from '../data/repository';
+import { createContext, useContext, useState } from 'react';
+import type { User } from '../models/models';
 
 interface AuthContextType {
   user: User | null;
@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('bancoxyz_user');
+    localStorage.removeItem('bancoxyz_token');
   };
 
   return (

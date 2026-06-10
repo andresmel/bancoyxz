@@ -1,10 +1,12 @@
 
 import { Link } from "react-router-dom";
-import { HeaderForm } from "../header";
+import { HeaderForm } from "../headerLogin";
 import { useUserAuth } from "../../../../hooks/auth/useUserAuth";
 import { useState } from "react";
-import { LoginRequest } from "../../../../services/auth/service-auth";
+import type {LoginRequest} from "../../../../models/models";
 import { Loading } from "../../../../components/loading";
+
+
 export const Form = () => {
    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    const {authLogin,error,loading} = useUserAuth();
@@ -12,7 +14,7 @@ export const Form = () => {
    const email = formData.email.trim();
    const password = formData.password;
    const isEmailValid = emailRegex.test(email);
-   const isPasswordValid = password.trim().length >= 6;
+   const isPasswordValid = password.trim().length >= 3;
    const isFormValid = isEmailValid && isPasswordValid;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,7 +57,7 @@ export const Form = () => {
             type="password"
             placeholder="********"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            minLength={6}
+            minLength={3}
             required
           />
           {formData.password.length > 0 && !isPasswordValid && (

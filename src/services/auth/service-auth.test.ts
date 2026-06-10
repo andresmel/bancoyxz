@@ -1,47 +1,44 @@
 import { authService } from './service-auth';
+import { endpointAuth } from '../../api/endpoint';
 
-describe('authService', () => {
-  describe('login', () => {
-    it('returns user with valid credentials', () => {
-      const { login } = authService();
-      const user = login({ email: 'johndoe@example.com', password: 'password123' });
-      expect(user).toBeDefined();
-      expect(user.email).toBe('johndoe@example.com');
-      expect(user.name).toBe('John Doe');
-    });
+jest.mock('../../api/endpoint', () => ({
+  endpointAuth: {
+    login: jest.fn(),
+  },
+}));
 
-    it('returns correct user when multiple users exist', () => {
-      const { login } = authService();
-      const user = login({ email: 'janesmith@example.com', password: 'password456' });
-      expect(user.email).toBe('janesmith@example.com');
-    });
+const mockLogin = endpointAuth.login as jest.Mock;
 
-    it('throws error with invalid email', () => {
-      const { login } = authService();
-      expect(() =>
-        login({ email: 'notexist@example.com', password: 'password123' })
-      ).toThrow('Invalid email or password');
-    });
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
-    it('throws error with wrong password for valid email', () => {
-      const { login } = authService();
-      expect(() =>
-        login({ email: 'johndoe@example.com', password: 'wrongpassword' })
-      ).toThrow('Invalid email or password');
-    });
+describe('authService.login', () => {
+  it('calls endpointAuth.login with the provided request', async () => {
+    const request = { email: 'test@test.com', password: '123456' };
+    const data = { token: 'tok', user: { id: 1, name: 'Test', email: 'test@test.com' } };
+    mockLogin.mockResolvedValue({ data });
 
-    it('throws error when both email and password are invalid', () => {
-      const { login } = authService();
-      expect(() =>
-        login({ email: 'nobody@example.com', password: 'notapassword' })
-      ).toThrow('Invalid email or password');
-    });
+    await authService.login(request);
 
-    it('throws error with correct email but empty password', () => {
-      const { login } = authService();
-      expect(() =>
-        login({ email: 'johndoe@example.com', password: '' })
-      ).toThrow('Invalid email or password');
-    });
+    expect(mockLogin).toHaveBeenCalledWith(request);
+  });
+
+  it('returns response.data on success', async () => {
+    const request = { email: 'test@test.com', password: '123456' };
+    const data = { token: 'tok', user: { id: 1, name: 'Test', email: 'test@test.com' } };
+    mockLogin.mockResolvedValue({ data });
+
+    const result = await authService.login(request);
+
+    expect(result).toEqual(data);
+  });
+
+  it('propagates errors thrown by the endpoint', async () => {
+    const request = { email: 'test@test.com', password: 'wrong' };
+    const error = { response: { data: { message: 'Unauthorized' } } };
+    mockLogin.mockRejectedValue(error);
+
+    await expect(authService.login(request)).rejects.toEqual(error);
   });
 });
