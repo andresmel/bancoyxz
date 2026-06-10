@@ -1,5 +1,5 @@
 import { Welcome } from "../../pages/Onboarding/ui/Welcome";
-export default function Onboarding() {
+export default function OnboardingPage() {
     return(
         <>
        <Welcome/>

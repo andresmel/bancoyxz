@@ -1,23 +1,11 @@
-import {  User } from './../../data/repository';
-import repository from "../../data/repository";
+import type { LoginRequest, LoginResponse } from "../../models/models";
+import { endpointAuth } from "../../api/endpoint";
 
-export interface LoginRequest{
-    email:string
-    password:string
-}
+  const login = async (request: LoginRequest): Promise<LoginResponse> => {
+     const response = await endpointAuth.login(request);
+     return response.data;
+  };
 
-export const authService =()=>{ 
-
-     const { users } = repository();
-
-     const login = (request:LoginRequest)=>{
-        const user = users.find((u:User)=>u.email === request.email && u.password === request.password);
-        if(!user) throw new Error("Invalid email or password");
-        return user;
-     }
-
-     return{
-        login
-     }
-
-};
+  export const authService = {
+    login,
+  };
