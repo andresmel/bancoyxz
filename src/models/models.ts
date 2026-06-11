@@ -1,5 +1,3 @@
-
-
 export interface LoginRequest {
   email: string;
   password: string;
@@ -13,17 +11,6 @@ export interface RegisterRequest {
   photo: string;
 }
 
-export interface accountDetails {
-  id: number;
-  id_user: number;
-  account_number: string;
-  balance: number;
-  product_type: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-
 
 export interface LoginResponse {
   token: string;
@@ -31,17 +18,14 @@ export interface LoginResponse {
 }
 
 export interface User {
-    id:number, 
-    name:string, 
-    email:string
+  id: number;
+  name: string;
+  email: string;
 }
 
-export interface account_details{
-    id:number
-    id_user:number
-    account_number:string
-    balance:number
-    product_type:string
-    createdAt:Date
-    updatedAt:Date
+
+
+export interface BalanceResponse {
+  currency: string;
+  accountBalance: number;
 }

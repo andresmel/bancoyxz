@@ -1,12 +1,11 @@
+import { axiosInstance } from './axiosConfig';
+import type { LoginRequest, RegisterRequest } from '../models/models';
 
-import {axiosInstance } from './axiosConfig';
-import type {LoginRequest,RegisterRequest} from '../models/models';
-
-
-const endpointAuth = {
+export const endpointAuth = {
   login: (data: LoginRequest) => axiosInstance.post('/login', data),
   register: (data: RegisterRequest) => axiosInstance.post('/register', data)
 };
 
-
-export { endpointAuth};
+export const endpointBalance = {
+  getBalance: () => axiosInstance.get('/balance'),  // ← proxy maneja la URL
+};
