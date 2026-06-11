@@ -1,22 +1,27 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-
 axiosInstance.interceptors.request.use((config) => {
+
   const token = localStorage.getItem('bancoxyz_token');
-  if (token) {
+  console.log("Request URL:", config.url);
+  console.log("Request Token:", token);
+
+  const publicRoutes = ['/login', '/register'];
+  const isPublic = publicRoutes.some(route => config.url?.includes(route));
+
+  if (token && !isPublic) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
-// Response interceptor → maneja errores globales
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -28,4 +33,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export{};
+export {};
