@@ -6,6 +6,7 @@ import OnboardingPage from "../pages/Onboarding/index";
 import BalancePage from "../pages/balance/index";
 import { ProtectedRoute } from "./ProtectedRoutes";
 import TransfersPage from "../pages/transfers";
+import ListTransfersPage from "../pages/ListTransfers";
 
 export const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ export const AppRoutes = () => {
               <Route index element={<BalancePage />} />
               <Route path="/dashboard/balance" element={<BalancePage />} />
               <Route path="/dashboard/transfers" element={<TransfersPage />} />
+              <Route path="/dashboard/list-transfers" element={<ListTransfersPage />} />
             </Route>
           </Route>
         </Routes>
