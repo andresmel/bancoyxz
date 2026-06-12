@@ -5,11 +5,11 @@ import type { LoginRequest } from "../../models/models";
 import { useAuth } from "../../context/AuthUserContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+
 
 export const useUserAuth = () => {
   const { login } = useAuth();
-  const navigate = useNavigate();
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
