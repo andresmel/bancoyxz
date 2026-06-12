@@ -27,4 +27,13 @@ module.exports = function(app) {
       pathRewrite: { '^/transfer': '/default/transfer' }
     })
   );
+
+  app.use(
+    '/transferList',
+    createProxyMiddleware({
+      target: 'https://n0qaa2fx3c.execute-api.us-east-1.amazonaws.com',
+      changeOrigin: true,
+      pathRewrite: { '^/transferList': '/default/transferList' }
+    })
+  );
 };

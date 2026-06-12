@@ -1,9 +1,10 @@
 import { productService } from './service-product';
-import { endpointBalance, endpointTransfer } from '../../api/endpoint';
+import { endpointBalance, endpointTransfer, endpointTransferList } from '../../api/endpoint';
 
 jest.mock('../../api/endpoint', () => ({
   endpointBalance: { getBalance: jest.fn() },
   endpointTransfer: { setTransfer: jest.fn() },
+  endpointTransferList: { getTransferList: jest.fn() },
 }));
 
 jest.mock('../../api/currency', () => ({
@@ -15,6 +16,7 @@ jest.mock('../../api/currency', () => ({
 
 const mockGetBalance = endpointBalance.getBalance as jest.Mock;
 const mockSetTransfer = endpointTransfer.setTransfer as jest.Mock;
+const mockGetTransferList = endpointTransferList.getTransferList as jest.Mock;
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -98,5 +100,49 @@ describe('productService.getCurrency', () => {
 
   it('returns an array', () => {
     expect(Array.isArray(productService.getCurrency())).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// productService.getListTransfers
+// ---------------------------------------------------------------------------
+
+describe('productService.getListTransfers', () => {
+  const transferHistory = {
+    message: 'OK',
+    transfers: [
+      { value: 500, date: '2026-06-10', currency: 'USD', payeer: { document: '123456789', name: 'John Doe' } },
+    ],
+  };
+
+  it('calls endpointTransferList.getTransferList and returns response data', async () => {
+    mockGetTransferList.mockResolvedValue({ data: transferHistory });
+
+    const result = await productService.getListTransfers();
+
+    expect(mockGetTransferList).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(transferHistory);
+  });
+
+  it('returns an empty transfers array when the list is empty', async () => {
+    const empty = { message: 'OK', transfers: [] };
+    mockGetTransferList.mockResolvedValue({ data: empty });
+
+    const result = await productService.getListTransfers();
+
+    expect(result.transfers).toHaveLength(0);
+  });
+
+  it('propagates errors from endpointTransferList.getTransferList', async () => {
+    const error = { response: { status: 401, data: { message: 'Unauthorized' } } };
+    mockGetTransferList.mockRejectedValue(error);
+
+    await expect(productService.getListTransfers()).rejects.toEqual(error);
+  });
+
+  it('propagates network errors', async () => {
+    mockGetTransferList.mockRejectedValue(new Error('Network Error'));
+
+    await expect(productService.getListTransfers()).rejects.toThrow('Network Error');
   });
 });

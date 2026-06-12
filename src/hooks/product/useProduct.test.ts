@@ -9,6 +9,7 @@ jest.mock('../../services/product/service-product', () => ({
     getBalance: jest.fn(),
     setTransfer: jest.fn(),
     getCurrency: jest.fn(),
+    getListTransfers: jest.fn(),
   },
 }));
 
@@ -21,6 +22,7 @@ jest.mock('../../context/ProductContext');
 
 const mockSetTransfer = productService.setTransfer as jest.Mock;
 const mockGetCurrency = productService.getCurrency as jest.Mock;
+const mockGetListTransfers = productService.getListTransfers as jest.Mock;
 const mockSaveBalance = jest.fn();
 
 beforeEach(() => {
@@ -157,5 +159,102 @@ describe('useProduct - getCurrency', () => {
 
     const { result } = renderHook(() => useProduct());
     expect(result.current.getCurrency()).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// getListTransfers
+// ---------------------------------------------------------------------------
+
+const mockTransferHistory = {
+  message: 'OK',
+  transfers: [
+    { value: 500, date: '2026-06-10', currency: 'USD', payeer: { document: '123456789', name: 'John Doe' } },
+  ],
+};
+
+describe('useProduct - getListTransfers', () => {
+  it('initializes with listTransfers null', () => {
+    const { result } = renderHook(() => useProduct());
+
+    expect(result.current.listTransfers).toBeNull();
+  });
+
+  it('sets loading true while the request is in flight', async () => {
+    let resolve!: (v: any) => void;
+    mockGetListTransfers.mockReturnValue(new Promise((res) => { resolve = res; }));
+
+    const { result } = renderHook(() => useProduct());
+
+    act(() => { result.current.getListTransfers(); });
+
+    expect(result.current.loading).toBe(true);
+
+    await act(async () => { resolve(mockTransferHistory); });
+
+    expect(result.current.loading).toBe(false);
+  });
+
+  it('sets listTransfers on success', async () => {
+    mockGetListTransfers.mockResolvedValue(mockTransferHistory);
+
+    const { result } = renderHook(() => useProduct());
+
+    await act(async () => { await result.current.getListTransfers(); });
+
+    expect(result.current.listTransfers).toEqual(mockTransferHistory);
+    expect(result.current.loading).toBe(false);
+    expect(result.current.error).toBeNull();
+  });
+
+  it('sets error and calls toast.error on failure', async () => {
+    const error = { response: { data: { message: 'Unauthorized' } } };
+    mockGetListTransfers.mockRejectedValue(error);
+
+    const { result } = renderHook(() => useProduct());
+
+    await act(async () => { await result.current.getListTransfers(); });
+
+    expect(result.current.error).toBe('Unauthorized');
+    expect(toast.error).toHaveBeenCalledWith('Unauthorized');
+    expect(result.current.loading).toBe(false);
+  });
+
+  it('uses fallback error message when response has no message', async () => {
+    mockGetListTransfers.mockRejectedValue(new Error('Network error'));
+
+    const { result } = renderHook(() => useProduct());
+
+    await act(async () => { await result.current.getListTransfers(); });
+
+    expect(result.current.error).toBe('Failed to fetch transfers list');
+    expect(toast.error).toHaveBeenCalledWith('Failed to fetch transfers list');
+  });
+
+  it('validates token: sets error on 401 unauthorized response', async () => {
+    const error = { response: { status: 401, data: { message: 'Token inválido o expirado' } } };
+    mockGetListTransfers.mockRejectedValue(error);
+
+    const { result } = renderHook(() => useProduct());
+
+    await act(async () => { await result.current.getListTransfers(); });
+
+    expect(result.current.error).toBe('Token inválido o expirado');
+    expect(toast.error).toHaveBeenCalledWith('Token inválido o expirado');
+  });
+
+  it('clears a previous error before a new request', async () => {
+    mockGetListTransfers
+      .mockRejectedValueOnce({ response: { data: { message: 'Error previo' } } })
+      .mockResolvedValueOnce(mockTransferHistory);
+
+    const { result } = renderHook(() => useProduct());
+
+    await act(async () => { await result.current.getListTransfers(); });
+    expect(result.current.error).toBe('Error previo');
+
+    await act(async () => { await result.current.getListTransfers(); });
+    expect(result.current.error).toBeNull();
+    expect(result.current.listTransfers).toEqual(mockTransferHistory);
   });
 });

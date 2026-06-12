@@ -1,4 +1,4 @@
-import { axiosAuth, axiosBalance, axiosTransfer } from './axiosConfig';
+import { axiosAuth, axiosBalance, axiosTransfer, axiosTransferList } from './axiosConfig';
 import type { LoginRequest, RegisterRequest, TransferRequest } from '../models/models';
 
 export const endpointAuth = {
@@ -13,4 +13,8 @@ export const endpointBalance = {
 
 export const endpointTransfer = {
   setTransfer: (data: TransferRequest) => axiosTransfer.post('/transfer', data),  // ← proxy maneja la URL
+};
+
+export const endpointTransferList = {
+  getTransferList: () => axiosTransferList.get('/transferList'),  // ← proxy maneja la URL
 };
