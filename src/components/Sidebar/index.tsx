@@ -11,7 +11,7 @@ export const Sidebar = () => {
 
   return (
     <aside className="w-64 min-h-screen bg-slate-900 text-white pt-6 flex flex-col">
-      <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
+      <h2 className="text-2xl font-bold mb-8 flex items-center justify-center flex gap-2">
         <Menu /> Operaciones
       </h2>
 

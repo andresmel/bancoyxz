@@ -2,24 +2,16 @@ import { useState } from "react";
 import { useProduct } from "../../../../hooks/product/useProduct";
 import { Loading } from "../../../../components/loading";
 import { onlyNumbers } from "../../../../utils/numberUtil";
-import {
-  Banknote,
-  Calendar1,
-  DollarSign,
-  SquareUserRound,
-} from "lucide-react";
+import { Banknote, Calendar1, DollarSign, SquareUserRound } from "lucide-react";
+import { useProductContext } from "../../../../context/ProductContext";
+import toast from "react-hot-toast";
 
 export const TrasferCard = () => {
-  const {
-    setTransfer,
-    loading,
-    error,
-    transferMessage,
-    getCurrency,
-  } = useProduct();
+  const { setTransfer, loading, error, transferMessage, getCurrency } =
+    useProduct();
 
   const today = new Date().toISOString().split("T")[0];
-
+  const { balance } = useProductContext();
   const [formData, setFormData] = useState({
     value: 0,
     currency: "",
@@ -35,6 +27,11 @@ export const TrasferCard = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(formData.value, balance?.accountBalance);
+    if(formData.value > balance?.accountBalance!){
+      toast.error("No tienes saldo suficiente para realizar esta transferencia");
+      return;
+    }
 
     if (!isValid) {
       alert("Todos los campos son obligatorios");
@@ -47,18 +44,16 @@ export const TrasferCard = () => {
     }
 
     setTransfer(formData).then(() => {
-        if(!error){
-           setFormData({
-        value: 0,
-        currency: "",
-        payeerDocument: "",
-        transferDate: "",
-      });
-        }
+      if (!error) {
+        setFormData({
+          value: 0,
+          currency: "",
+          payeerDocument: "",
+          transferDate: "",
+        });
+      }
     });
   };
-
-
 
   return (
     <>
