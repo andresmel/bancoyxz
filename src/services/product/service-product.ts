@@ -2,7 +2,7 @@ import {endpointBalance,endpointTransfer, endpointTransferList} from "../../api/
 import {BalanceResponse, TransferHistoryResponse} from "../../models/models";
 import {TransferRequest,TransferResponse} from "../../models/models";
 import {currency} from "../../api/currency";
-import { promises } from "dns";
+
 const getBalance = async (): Promise<BalanceResponse> => {
   const response = await endpointBalance.getBalance();
   return response.data;
