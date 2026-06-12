@@ -3,6 +3,7 @@ import { productService } from "../../services/product/service-product";
 import { useProductContext } from "../../context/ProductContext";
 import type { TransferHistoryResponse, TransferRequest } from "../../models/models";
 import toast from "react-hot-toast";
+import { get } from "http";
 
 export const useProduct = () => {
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ export const useProduct = () => {
   };
 
 
-  const getListTransfers = async () => {
+  const getListTransfers = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -61,7 +62,7 @@ export const useProduct = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return {
     loading,

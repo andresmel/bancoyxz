@@ -8,7 +8,7 @@ export const TransferListTable = () => {
 
   useEffect(() => {
     getListTransfers();
-  }, []);
+  }, [getListTransfers]);
 
   return (
     <>
