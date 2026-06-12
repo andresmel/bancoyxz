@@ -2,3 +2,88 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+:root {
+  --offset: 187;
+  --duration: 1.4s;
+}
+.container-loading{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: fixed;
+   width: 100%;
+   height: 100%;
+   top:0%;
+   left:0%;
+   z-index: 9999;
+   background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+
+
+.container-loading .spinner {
+  width: 65px;
+  height: 65px;
+  animation: rotator var(--duration) linear infinite;
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+.container-loading .path {
+  stroke-dasharray: var(--offset);
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation:
+    dash var(--duration) ease-in-out infinite,
+    colors calc(var(--duration) * 4) ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+
+  25% {
+    stroke: #de3e35;
+  }
+
+  50% {
+    stroke: #f7c223;
+  }
+
+  75% {
+    stroke: #1b9a59;
+  }
+
+  100% {
+    stroke: #4285f4;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: var(--offset);
+  }
+
+  50% {
+    stroke-dashoffset: calc(var(--offset) / 4);
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: var(--offset);
+    transform: rotate(450deg);
+  }
+}
