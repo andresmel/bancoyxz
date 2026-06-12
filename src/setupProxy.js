@@ -18,4 +18,13 @@ module.exports = function(app) {
       pathRewrite: { '^/balance': '/default/balance' }
     })
   );
+
+  app.use(
+    '/transfer',
+    createProxyMiddleware({
+      target: 'https://ofqx4zxgcf.execute-api.us-east-1.amazonaws.com',
+      changeOrigin: true,
+      pathRewrite: { '^/transfer': '/default/transfer' }
+    })
+  );
 };
