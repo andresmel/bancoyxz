@@ -1,7 +1,8 @@
-import {endpointBalance,endpointTransfer} from "../../api/endpoint";
-import {BalanceResponse} from "../../models/models";
+import {endpointBalance,endpointTransfer, endpointTransferList} from "../../api/endpoint";
+import {BalanceResponse, TransferHistoryResponse} from "../../models/models";
 import {TransferRequest,TransferResponse} from "../../models/models";
 import {currency} from "../../api/currency";
+import { promises } from "dns";
 const getBalance = async (): Promise<BalanceResponse> => {
   const response = await endpointBalance.getBalance();
   return response.data;
@@ -17,10 +18,16 @@ const getCurrency=()=>{
   return response;
 }
 
+const getListTransfers=async():Promise<TransferHistoryResponse>=>{
+  const response = await endpointTransferList.getTransferList();
+  return response.data;
+}
+
 export const productService = {
   getBalance,
   setTransfer,
-  getCurrency
+  getCurrency,
+  getListTransfers
 };
 
 

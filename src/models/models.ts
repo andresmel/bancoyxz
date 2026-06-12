@@ -41,3 +41,21 @@ export interface TransferRequest {
 export interface TransferResponse {
   status: "success" | "error";
 }
+
+
+export interface TransferHistoryResponse {
+  message: string;
+  transfers: TransferItem[];
+}
+
+export interface TransferItem {
+  value: number;
+  date: string;
+  currency: string;
+  payeer: Payeer;
+}
+
+export interface Payeer {
+  document: string;
+  name: string;
+}
