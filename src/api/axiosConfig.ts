@@ -29,7 +29,7 @@ const createInstance = (baseURL: string): AxiosInstance => {
 
   return instance;
 };
-
+// vercel
 export const axiosAuth = createInstance(process.env.REACT_APP_API_URL || '');
 export const axiosBalance = createInstance(process.env.REACT_APP_BALANCE_URL || '');
 export const axiosTransfer = createInstance(process.env.REACT_APP_TRANSFER_URL || '');

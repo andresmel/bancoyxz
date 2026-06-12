@@ -28,15 +28,11 @@ export const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/scheduled-transfers" className={linkClass}>
-              Transferencias Agendadas
+            <NavLink to="/dashboard/list-transfers" className={linkClass}>
+             Historial Transferencias
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/transfer-history" className={linkClass}>
-              Histórico de Transferencias
-            </NavLink>
-          </li>
+         
         </ul>
       </nav>
     </aside>
