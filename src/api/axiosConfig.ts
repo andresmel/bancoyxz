@@ -9,9 +9,6 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
 
   const token = localStorage.getItem('bancoxyz_token');
-  console.log("Request URL:", config.url);
-  console.log("Request Token:", token);
-
   const publicRoutes = ['/login', '/register'];
   const isPublic = publicRoutes.some(route => config.url?.includes(route));
 

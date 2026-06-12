@@ -5,6 +5,7 @@ import LoginPage from "../pages/Login/Index";
 import OnboardingPage from "../pages/Onboarding/index";
 import BalancePage from "../pages/balance/index";
 import { ProtectedRoute } from "./ProtectedRoutes";
+import TransfersPage from "../pages/transfers";
 
 export const AppRoutes = () => {
   return (
@@ -20,6 +21,7 @@ export const AppRoutes = () => {
             <Route path="/dashboard" element={<PrivateLayout />}>
               <Route index element={<BalancePage />} />
               <Route path="/dashboard/balance" element={<BalancePage />} />
+              <Route path="/dashboard/transfers" element={<TransfersPage />} />
             </Route>
           </Route>
         </Routes>

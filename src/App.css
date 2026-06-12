@@ -9,6 +9,29 @@
   --offset: 187;
   --duration: 1.4s;
 }
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.onboarding-container {
+  height: calc(100vh - 64px);
+  overflow-y: hidden !important;
+}
+
+.onboarding-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .container-loading{
    display: flex;
    align-items: center;
@@ -19,7 +42,7 @@
    top:0%;
    left:0%;
    z-index: 9999;
-   background-color: rgba(255, 255, 255, 0.5);
+   background-color: rgba(56, 56, 56, 0.9);
 }
 
 

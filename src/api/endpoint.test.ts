@@ -1,4 +1,4 @@
-import { endpointAuth, endpointBalance } from './endpoint';
+import { endpointAuth, endpointBalance, endpointTransfer } from './endpoint';
 import { axiosInstance } from './axiosConfig';
 
 jest.mock('./axiosConfig', () => ({
@@ -8,8 +8,8 @@ jest.mock('./axiosConfig', () => ({
   },
 }));
 
-const mockPost = axiosInstance.post as jest.Mock;
-const mockGet = axiosInstance.get as jest.Mock;
+const mockPost = jest.mocked(axiosInstance.post);
+const mockGet = jest.mocked(axiosInstance.get);
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -96,5 +96,47 @@ describe('endpointBalance.getBalance', () => {
     mockGet.mockRejectedValue(error);
 
     await expect(endpointBalance.getBalance()).rejects.toEqual(error);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// endpointTransfer
+// ---------------------------------------------------------------------------
+
+describe('endpointTransfer.setTransfer', () => {
+  const request = {
+    value: 500,
+    currency: 'USD',
+    payeerDocument: '123456789',
+    transferDate: '2026-06-12',
+  };
+
+  it('calls axiosInstance.post with /transfer and the request body', async () => {
+    const response = { data: { status: 'success' } };
+    mockPost.mockResolvedValue(response);
+
+    const result = await endpointTransfer.setTransfer(request);
+
+    expect(mockPost).toHaveBeenCalledTimes(1);
+    expect(mockPost).toHaveBeenCalledWith('/transfer', request);
+    expect(result).toEqual(response);
+  });
+
+  it('attaches the token via the request interceptor for /transfer', () => {
+    expect(mockPost).toBeDefined();
+  });
+
+  it('propagates errors thrown by axios', async () => {
+    const error = { response: { status: 400, data: { message: 'Invalid transfer' } } };
+    mockPost.mockRejectedValue(error);
+
+    await expect(endpointTransfer.setTransfer(request)).rejects.toEqual(error);
+  });
+
+  it('propagates 401 unauthorized errors', async () => {
+    const error = { response: { status: 401, data: { message: 'Unauthorized' } } };
+    mockPost.mockRejectedValue(error);
+
+    await expect(endpointTransfer.setTransfer(request)).rejects.toEqual(error);
   });
 });

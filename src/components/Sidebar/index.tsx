@@ -10,7 +10,7 @@ export const Sidebar = () => {
     }`;
 
   return (
-    <aside className="w-64 min-h-screen bg-slate-900 text-white p-6 flex flex-col">
+    <aside className="w-64 min-h-screen bg-slate-900 text-white pt-6 flex flex-col">
       <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
         <Menu /> Operaciones
       </h2>
@@ -19,27 +19,22 @@ export const Sidebar = () => {
         <ul className="space-y-3">
           <li>
             <NavLink to="/dashboard" end className={linkClass}>
-              Saldo Atual
+              Saldo Actual
             </NavLink>
           </li>
           <li>
             <NavLink to="/dashboard/transfers" className={linkClass}>
-              Transferências Bancárias
+              Transferencias
             </NavLink>
           </li>
           <li>
             <NavLink to="/dashboard/scheduled-transfers" className={linkClass}>
-              Transferências Agendadas
+              Transferencias Agendadas
             </NavLink>
           </li>
           <li>
             <NavLink to="/dashboard/transfer-history" className={linkClass}>
-              Histórico de Transferências
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/tests" className={linkClass}>
-              Testes Unitários
+              Histórico de Transferencias
             </NavLink>
           </li>
         </ul>

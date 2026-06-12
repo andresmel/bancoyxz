@@ -28,7 +28,7 @@ export const Form = () => {
   return (
     <>
       {loading && <Loading/>}
-      <form className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl shadow-lg-gray-300 mt-0" onSubmit={handleSubmit}>
+      <form className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl shadow-lg-gray-300 mt-[3vh]" onSubmit={handleSubmit}>
         <HeaderForm/>
         <div className="mb-5">
           <label className="block text-sm font-medium text-gray-700 mb-2">
