@@ -22,7 +22,7 @@ export const useUserAuth = () => {
         localStorage.setItem('bancoxyz_token', token);
         login(user);
         toast.success("bem-sucedido.");
-        // navigate("/dashboard");
+        navigate("/dashboard");
       } catch (err:any) {
          console.error("Login error:", err);
          const message = err.response?.data?.message || "Login falhou";
