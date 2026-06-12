@@ -11,7 +11,7 @@ export const TransferTitle = () => {
       <div>
         <TransferBalance />
       </div>
-      <div className="w-[90%] mx-auto mt-[3vh] mb-[5vh] justify-center flex ">
+      <div className="w-[90%] mx-auto mt-[3vh] mb-[2vh] justify-center flex ">
         <h2 className="text-2xl font-semibold text-gray-800">
           Realice transferencias de forma rápida y segura
         </h2>
