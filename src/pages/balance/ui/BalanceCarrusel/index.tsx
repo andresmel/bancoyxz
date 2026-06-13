@@ -25,7 +25,7 @@ export const BalanceCarousel = () => {
   const [current, setCurrent] = useState(0);
 
   return (
-    <div className="w-[70%] mx-auto mt-8">
+    <div className="w-[70%] mx-auto mt-[10vh]">
       <div className="relative overflow-hidden rounded-2xl shadow-lg">
         <img
           src={slides[current].image}

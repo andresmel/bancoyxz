@@ -4,11 +4,11 @@ export const LogoBanck = () => {
     <div className="flex items-center flex-shrink-0 text-white mr-6">
       <img
         src="https://images.vexels.com/media/users/3/135318/isolated/preview/45939241515a561751ed6222f2012003-icono-cuadrado-de-banco.png"
-        width={40}
-        height={40}
+        width={30}
+        height={30}
         loading="lazy"
         alt="Logo"
-        className="mr-2"
+        className="mr-2 rounded-full"
       />
       <Link to="/onboarding" className="font-semibold text-xl tracking-tight">
        Banco XYZ
