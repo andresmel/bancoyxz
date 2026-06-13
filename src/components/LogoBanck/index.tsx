@@ -8,7 +8,7 @@ export const LogoBanck = () => {
         height={40}
         loading="lazy"
         alt="Logo"
-        className="mr-2"
+        className="mr-2 rounded-full"
       />
       <Link to="/onboarding" className="font-semibold text-xl tracking-tight">
        Banco XYZ
