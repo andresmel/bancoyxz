@@ -13,7 +13,7 @@ import {
 
 export const MarqeeProducts = () => {
   return (
-    <div className="relative overflow-hidden w-full bg-slate-100 border-y border-slate-200 py-4 rounded-sm">
+    <div className="relative overflow-hidden w-full bg-slate-100 border-y border-slate-200 py-4 rounded-sm mt-10">
       <div
         className="
       absolute
