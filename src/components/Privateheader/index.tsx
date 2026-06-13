@@ -2,14 +2,38 @@ import { LogOut, Mail, UserRound } from "lucide-react";
 import { useAuth } from "../../context/AuthUserContext";
 import { LogoBanck } from "../LogoBanck";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
+
 export const PrivateHeader = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+    toast((t) => (
+    <div className="flex flex-col gap-2">
+      <p className="font-medium">¿Estas seguro de que quieres cerrar la sesión?</p>
+      <div className="flex gap-2">
+        <button
+          onClick={() => {
+            logout();
+            navigate('/login');
+            toast.dismiss(t.id);
+          }}
+          className="bg-red-500 text-white px-3 py-1 rounded text-sm"
+        >
+         cerrar
+        </button>
+        <button
+          onClick={() => toast.dismiss(t.id)}
+          className="bg-gray-200 px-3 py-1 rounded text-sm"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  ), { duration: Infinity }); 
   };
-  console.log("User in PrivateHeader:", user);
+
   return (
     <>
       <nav className="relative z-20 flex items-center justify-between flex-wrap bg-sky-700 p-3 shadow-[0_10px_24px_rgba(107,114,128,0.35)]">

@@ -30,6 +30,7 @@ export const useProduct = () => {
   const setTransfer = async (data: TransferRequest) => {
     setLoading(true);
     setError(null);
+    setTransferMessage(null);
     try {
       const response = await productService.setTransfer(data);
       toast.success(response.status || "Transfer successful");
