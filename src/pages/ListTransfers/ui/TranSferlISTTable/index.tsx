@@ -1,10 +1,30 @@
+
 import { Loading } from "../../../../components/loading";
 import { useProduct } from "../../../../hooks/product/useProduct";
 import { ArrowLeftRight } from "lucide-react";
 import { useEffect } from "react";
 
-export const TransferListTable = () => {
+export interface TransferListTableProps {
+  searchTerm: string;
+  searchDate: string;
+  onNoResults: (show: boolean) => void;
+}
+
+export const TransferListTable = ({ searchTerm, searchDate, onNoResults }: TransferListTableProps) => {
   const { getListTransfers, loading, error, listTransfers } = useProduct();
+
+
+  const filteredTransfers = listTransfers?.transfers.filter(
+    (search) =>
+      (search.payeer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      search.value.toString().includes(searchTerm) ||
+      search.date.includes(searchTerm)) &&
+      (searchDate ? search.date === searchDate : true)
+  );
+
+   useEffect(() => {
+    onNoResults(filteredTransfers?.length === 0);
+  }, [filteredTransfers, onNoResults]);  
 
   useEffect(() => {
     getListTransfers();
@@ -56,7 +76,7 @@ export const TransferListTable = () => {
                 </thead>
 
                 <tbody>
-                  {listTransfers?.transfers.map((transfer, index) => (
+                  {filteredTransfers?.map((transfer, index) => (
                     <tr
                       key={index}
                       className="
