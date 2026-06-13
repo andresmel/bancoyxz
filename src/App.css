@@ -126,3 +126,19 @@ body {
   width: max-content;
   animation: marquee 30s linear infinite;
 }
+
+
+#filterTable input[type="date"]:not([value=""]):not([value]) {
+  color: #334155;
+}
+
+#filterTable input[type="date"]:not(:valid) {
+  color: transparent;
+}
+
+#filterTable input[type="date"]:not(:valid):before {
+  content: "Buscar por fecha";
+  color: #94a3b8;
+  position: absolute;
+  pointer-events: none;
+}
