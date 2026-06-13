@@ -36,8 +36,8 @@ export const PrivateHeader = () => {
 
   return (
     <>
-      <nav className="relative flex items-center justify-between flex-wrap bg-sky-700 shadow-[0_10px_24px_rgba(107,114,128,0.35)]">
-        <div className="p-[2vh] bg-sky-900">
+      <nav className="relative flex items-center justify-between flex-wrap bg-sky-700 ">
+        <div className="p-[2vh] bg-sky-900 w-[255px]">
           <LogoBanck />
         </div>
         <div className="flex items-center">
@@ -51,9 +51,9 @@ export const PrivateHeader = () => {
 
           <button
             onClick={handleLogout}
-            className="  hover:bg-slate-500 text-white text-gray p-[2vh]  text-xl px-4 rounded flex items-center bg-sky-900"
+            className="  hover:bg-slate-500 text-white text-gray p-[2vh]  text-xl px-4  flex items-center bg-sky-900"
           >
-            <LogOut className="mr-2" /> cerrar sesion
+            <LogOut className="mr-2" /> Cerrar sesion
           </button>
 
           <div className="mr-2 ml-3 rounded-full overflow-hidden ">
