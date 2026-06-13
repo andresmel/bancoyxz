@@ -14,11 +14,11 @@ export const Welcome = () => {
             />
           </div>
           <div className="w-[30%] p-10 flex flex-col justify-center ">
-            <h1 className="text-3xl font-bold text-gray-500 bg-gray-100 flex justify-center rounded-10 p-4 items-center mb-10">
+            <h1 className="text-4xl font-bold text-gray-800  flex justify-center rounded-10 p-4 items-center mb-10">
             <img
             src="https://images.vexels.com/media/users/3/135318/isolated/preview/45939241515a561751ed6222f2012003-icono-cuadrado-de-banco.png"
               alt="Logo Banco XYZ"
-              className="w-7 h-7 mr-2"
+              className="w-7 h-7 mr-2 rounded-full"
             />
               Bienvenido a XYZ
             </h1>
