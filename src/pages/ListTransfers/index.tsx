@@ -1,5 +1,6 @@
 import { HeaderModules } from "../../components/HeaderModules";
-import { TransferListTable } from "./ui/TranSferlISTTable";
+import { FilterTable } from "./ui/FilterTable";
+
 
 
 
@@ -7,7 +8,7 @@ export default function ListTransfersPage() {
     return(
         <>
         <HeaderModules titulo={"Historial de Transferencias"} />
-        <TransferListTable />
+        <FilterTable />
         </>
     )
 }
